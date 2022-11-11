@@ -19,7 +19,7 @@ export default function Post({ post, deleteP }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`https://unituit-api.herokuapp.com/users?userId=${post.userId}`);
+      const res = await axios.get(`https://unituit-api.herokuapp.com/api/users?userId=${post.userId}`);
       setUser(res.data);
     };
     fetchUser();
