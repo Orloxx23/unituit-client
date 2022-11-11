@@ -1,0 +1,17 @@
+.homeContainer {
+  display: flex;
+  width: 100%;
+}
+
+body {
+  background: linear-gradient(251.51deg, #194547 12.74%, #15202b 98.57%);
+  background-repeat: no-repeat;
+}
+
+* {
+  color: white;
+}
+
+a{
+    text-decoration: none;
+}
