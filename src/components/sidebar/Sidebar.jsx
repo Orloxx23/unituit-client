@@ -69,7 +69,7 @@ export default function Sidebar() {
           ))}
         </ul>
       </div> */}
-      <TuitModal open={open} setOpen={setOpen} />
+      {open ? <TuitModal open={open} setOpen={setOpen} /> : ""}
       <div className="left">
         <div className="menu">
           <div className="frames">

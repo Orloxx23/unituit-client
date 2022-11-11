@@ -6,7 +6,9 @@
   padding: 20px;
   z-index: 1000;
   border-radius: 25px;
+  max-height: 500px;
   min-width: 35%;
+  cursor: hand;
   /* min-height: 35%; */
 
   background: rgba(255, 255, 255, 0.55);
@@ -36,6 +38,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  
 }
 
 .tuitModal-head i {

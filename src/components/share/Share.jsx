@@ -10,7 +10,7 @@ import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
-export default function Share() {
+export default function Share({addPost}) {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
@@ -21,6 +21,7 @@ export default function Share() {
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
+      likes: [],
     };
     if (file) {
       const data = new FormData();
@@ -35,7 +36,9 @@ export default function Share() {
     }
     try {
       await axios.post("/posts", newPost);
-      window.location.reload();
+      reset();
+      addPost(newPost);
+      //window.location.reload();
     } catch (err) {}
     try {
       const msg = desc.current.value.substr(0, 20);
@@ -49,6 +52,11 @@ export default function Share() {
       });
     } catch (error) {}
   };
+
+  const reset = () =>{
+    setFile(null);
+    desc.current.value = "";
+  }
 
   return (
     <div className="share">
