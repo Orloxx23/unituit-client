@@ -31,18 +31,18 @@ export default function Share({addPost}) {
       newPost.img = fileName;
       console.log(newPost);
       try {
-        await axios.post("/upload", data);
+        await axios.post("https://unituit-api.herokuapp.com/upload", data);
       } catch (err) {}
     }
     try {
-      await axios.post("/posts", newPost);
+      await axios.post("https://unituit-api.herokuapp.com/posts", newPost);
       reset();
       addPost(newPost);
       //window.location.reload();
     } catch (err) {}
     try {
       const msg = desc.current.value.substr(0, 20);
-      await axios.post("/subscription/new-message", {
+      await axios.post("https://unituit-api.herokuapp.com/subscription/new-message", {
         headers: {
           "Content-Type": "application/json",
         },

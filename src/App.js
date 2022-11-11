@@ -48,6 +48,7 @@ function App() {
     console.log(subscription);
 
     // Send Notification
+    //api/subscription
     await fetch("https://unituit-api.herokuapp.com/api/subscription", {
       method: "POST",
       body: JSON.stringify(subscription),
