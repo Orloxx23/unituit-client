@@ -15,20 +15,6 @@ import { io } from "socket.io-client";
 function App() {
   const { user } = React.useContext(AuthContext);
   const { socket, setSocket } = React.useContext(SocketContext);
-  async function registerWorker() {
-    if ("serviceWorker" in navigator) {
-      subscription();
-      let url = process.env.PUBLIC_URL + "/worker.js";
-      const reg = await navigator.serviceWorker.register(url, { scope: "/" });
-      console.log("service config is", { reg });
-      return reg;
-    }
-    throw Error("serviceworker not supported");
-  }
-
-  React.useEffect(() => {
-    registerWorker();
-  }, []);
 
   React.useEffect(() => {
     const socket = io("https://unituit-api.herokuapp.com");
@@ -39,51 +25,6 @@ function App() {
     socket?.emit("addUser", user?._id);
   }, [socket, user]);
 
-  const subscription = async () => {
-    const PUBLIC_VAPID_KEY =
-      "BEyTAdeeDZzxzcAhiRbYQ5dbkYZA8m7n78TPzizfhwSDrqr-1CUGY97WoGw8NdhdSOkE0Gol9fsCz0mz0o8kig8";
-    // Service Worker
-    console.log("Registering a Service worker");
-    const register = await navigator.serviceWorker.register("/worker.js", {
-      scope: "/",
-    });
-    console.log("New Service Worker");
-
-    // Listen Push Notifications
-    console.log("Listening Push Notifications");
-    const subscription = await register.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY),
-    });
-
-    console.log(subscription);
-
-    // Send Notification
-    //api/subscription
-    await fetch("https://unituit-api.herokuapp.com/api/subscription", {
-      method: "POST",
-      body: JSON.stringify(subscription),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("Subscribed!");
-  };
-
-  function urlBase64ToUint8Array(base64String) {
-    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding)
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
-  }
   return (
     <Router>
       <Switch>
