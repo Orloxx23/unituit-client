@@ -40,17 +40,7 @@ export default function Share({addPost}) {
       addPost(newPost);
       //window.location.reload();
     } catch (err) {}
-    try {
-      const msg = desc.current.value.substr(0, 20);
-      await axios.post("https://unituit-api.herokuapp.com/api/subscription/new-message", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: msg + "...",
-        }),
-      });
-    } catch (error) {}
+    
   };
 
   const reset = () =>{

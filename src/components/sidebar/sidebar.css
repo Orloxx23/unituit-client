@@ -118,3 +118,10 @@
   color: #ffffff;
   font-size: 25px;
 }
+
+.nameFrame span {
+  padding: 15px 20px;
+  border-radius: 50%;
+  background: #ffffff10;
+  margin-left: 0.5rem;
+}

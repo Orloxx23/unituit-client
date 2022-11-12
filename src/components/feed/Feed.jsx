@@ -9,7 +9,7 @@ import "./feed.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
-export default function Feed({ username }) {
+export default function Feed({ username, socket }) {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
 
@@ -41,7 +41,7 @@ export default function Feed({ username }) {
       <div className="feedWrapper">
         {(!username || username === user.username) && <Share addPost={addPost}/>}
         {posts.map((p) => (
-          <Post key={p._id} post={p} deleteP={deletePost} />
+          <Post key={p._id} post={p} deleteP={deletePost} sokect={socket} />
         ))}
       </div>
     </div>

@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { format, register } from "timeago.js";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext, SocketContext } from "../../context/";
 
 export default function Post({ post, deleteP }) {
   const [like, setLike] = useState(post.likes.length);
@@ -12,6 +12,7 @@ export default function Post({ post, deleteP }) {
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -19,16 +20,30 @@ export default function Post({ post, deleteP }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`https://unituit-api.herokuapp.com/api/users?userId=${post.userId}`);
+      const res = await axios.get(
+        `https://unituit-api.herokuapp.com/api/users?userId=${post.userId}`
+      );
       setUser(res.data);
     };
     fetchUser();
   }, [post.userId]);
 
-  const likeHandler = () => {
+  const likeHandler = async () => {
     try {
-      axios.put("https://unituit-api.herokuapp.com/api/posts/" + post._id + "/like", { userId: currentUser._id });
+      await axios.put(
+        "https://unituit-api.herokuapp.com/api/posts/" + post._id + "/like",
+        { userId: currentUser._id }
+      );
     } catch (err) {}
+    if (!isLiked) {
+      if (currentUser._id !== post.userId) {
+        socket?.emit("likePost", {
+          senderId: currentUser._id,
+          receiverId: post.userId,
+          postId: post._id,
+        });
+      }
+    }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -39,9 +54,12 @@ export default function Post({ post, deleteP }) {
 
   const deletePost = async () => {
     try {
-      await axios.delete(`https://unituit-api.herokuapp.com/api/posts/${post._id}`, {
-        data: { userId: currentUser._id },
-      });
+      await axios.delete(
+        `https://unituit-api.herokuapp.com/api/posts/${post._id}`,
+        {
+          data: { userId: currentUser._id },
+        }
+      );
       deleteP(post._id);
     } catch (err) {}
   };
@@ -66,8 +84,8 @@ export default function Post({ post, deleteP }) {
   };
 
   useEffect(() => {
-    register('es_ES', localeFunc);
-  },[])
+    register("es_ES", localeFunc);
+  }, []);
 
   /*return (
     <div className="post">

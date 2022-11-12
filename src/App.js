@@ -8,11 +8,13 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import React, { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import React from "react";
+import { AuthContext, SocketContext } from "./context";
+import { io } from "socket.io-client";
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user } = React.useContext(AuthContext);
+  const { socket, setSocket } = React.useContext(SocketContext);
   async function registerWorker() {
     if ("serviceWorker" in navigator) {
       subscription();
@@ -27,6 +29,15 @@ function App() {
   React.useEffect(() => {
     registerWorker();
   }, []);
+
+  React.useEffect(() => {
+    const socket = io("http://localhost:5000");
+    setSocket(socket);
+  }, []);
+
+  React.useEffect(() => {
+    socket?.emit("addUser", user?._id);
+  }, [socket, user]);
 
   const subscription = async () => {
     const PUBLIC_VAPID_KEY =

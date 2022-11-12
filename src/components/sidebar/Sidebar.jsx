@@ -15,11 +15,34 @@ import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
 import TuitModal from "../tuitModal";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext, SocketContext } from "../../context";
+import axios from "axios";
 
 export default function Sidebar() {
   const { user } = React.useContext(AuthContext);
+  const { socket } = React.useContext(SocketContext);
   const [open, setOpen] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([]);
+
+  React.useEffect(() => {
+    socket?.on("getLikePost", data => {
+      setNotifications((prev) => [...prev, data]);
+      try {
+        //const msg = desc.current.value.substr(0, 20);
+        axios.post("http://unituit-api.herokuapp.com/api/subscription/new-message", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: "Te han dado like en una publicacion",
+          }),
+        });
+      } catch (error) {}
+    });
+  }, [socket]);
+
+  console.log(notifications);
+
   return (
     <div className="sidebar">
       {/* <div className="sidebarWrapper">
@@ -79,13 +102,15 @@ export default function Sidebar() {
                 <p className="nameFrame">Home</p>
               </div>
             </Link>
-            <div className="frame">
+            {/* <div className="frame">
               <div className="iconFrame"></div>
               <p className="nameFrame">Tendencias</p>
-            </div>
+            </div> */}
             <div className="frame">
               <div className="iconFrame"></div>
-              <p className="nameFrame">Notificación</p>
+              <p className="nameFrame">
+                Notificaciones <span>{notifications.length}</span>
+              </p>
             </div>
             <Link to={`/profile/${user.username}`}>
               <div className="frame">
