@@ -27,7 +27,7 @@ export default function Post({ post, deleteP }) {
 
   const likeHandler = () => {
     try {
-      axios.put("https://unituit-api.herokuapp.com/posts/" + post._id + "/like", { userId: currentUser._id });
+      axios.put("https://unituit-api.herokuapp.com/api/posts/" + post._id + "/like", { userId: currentUser._id });
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -39,7 +39,7 @@ export default function Post({ post, deleteP }) {
 
   const deletePost = async () => {
     try {
-      await axios.delete(`https://unituit-api.herokuapp.com/posts/${post._id}`, {
+      await axios.delete(`https://unituit-api.herokuapp.com/api/posts/${post._id}`, {
         data: { userId: currentUser._id },
       });
       deleteP(post._id);
