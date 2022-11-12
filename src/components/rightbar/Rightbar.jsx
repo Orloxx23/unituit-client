@@ -1,17 +1,16 @@
 import "./rightbar.css";
-import { Users } from "../../dummyData";
-import Online from "../online/Online";
+//import Online from "../online/Online";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AuthContext, SocketContext } from "../../context";
+import { AuthContext } from "../../context";
 import { Add, Remove } from "@material-ui/icons";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const { socket } = useContext(SocketContext);
+  //const { socket } = useContext(SocketContext);
   const [followed, setFollowed] = useState();
 
   useEffect(() => {

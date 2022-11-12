@@ -1,22 +1,9 @@
 import React from "react";
 import "./sidebar.css";
-import {
-  RssFeed,
-  Chat,
-  PlayCircleFilledOutlined,
-  Group,
-  Bookmark,
-  HelpOutline,
-  WorkOutline,
-  Event,
-  School,
-} from "@material-ui/icons";
-import { Users } from "../../dummyData";
-import CloseFriend from "../closeFriend/CloseFriend";
+//import CloseFriend from "../closeFriend/CloseFriend";
 import TuitModal from "../tuitModal";
 import { Link } from "react-router-dom";
 import { AuthContext, SocketContext } from "../../context";
-import axios from "axios";
 
 export default function Sidebar() {
   const { user } = React.useContext(AuthContext);
