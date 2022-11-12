@@ -27,17 +27,6 @@ export default function Sidebar() {
   React.useEffect(() => {
     socket?.on("getLikePost", data => {
       setNotifications((prev) => [...prev, data]);
-      try {
-        //const msg = desc.current.value.substr(0, 20);
-        axios.post("https://unituit-api.herokuapp.com/api/subscription/new-message", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: "Te han dado like en una publicacion",
-          }),
-        });
-      } catch (error) {}
     });
   }, [socket]);
 
