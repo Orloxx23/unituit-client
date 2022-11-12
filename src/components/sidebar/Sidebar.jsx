@@ -29,7 +29,7 @@ export default function Sidebar() {
       setNotifications((prev) => [...prev, data]);
       try {
         //const msg = desc.current.value.substr(0, 20);
-        axios.post("http://unituit-api.herokuapp.com/api/subscription/new-message", {
+        axios.post("https://unituit-api.herokuapp.com/api/subscription/new-message", {
           headers: {
             "Content-Type": "application/json",
           },
