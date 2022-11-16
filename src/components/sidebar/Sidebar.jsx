@@ -112,7 +112,12 @@ export default function Sidebar() {
               <div className="iconFrame"></div>
               <p className="nameFrame">Tendencias</p>
             </div> */}
-            <div onClick={() => setNotiModal(!notiModal)}>
+            <div
+              onClick={() => {
+                setNotiModal(!notiModal);
+                setNotifications([]);
+              }}
+            >
               <div className="frame">
                 <div className="iconFrame"></div>
                 <p className="nameFrame">
