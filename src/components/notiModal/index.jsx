@@ -4,7 +4,7 @@ import "./notiModal.css";
 import axios from "axios";
 import { AuthContext } from "../../context";
 
-export default function NotiModal({ open, setOpen }) {
+export default function NotiModal({ open, setOpen, deleteN }) {
   const { user } = React.useContext(AuthContext);
   const [notifications, setNotifications] = React.useState([]);
 
@@ -24,6 +24,7 @@ export default function NotiModal({ open, setOpen }) {
 
   const deleteNoti = (id) => {
     setNotifications(notifications.filter((n) => n.id !== id));
+    deleteN(id);
   };
 
   return (

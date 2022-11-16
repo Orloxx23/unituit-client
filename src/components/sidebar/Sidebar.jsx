@@ -36,6 +36,10 @@ export default function Sidebar() {
 
   //console.log(notifications);
 
+  const deleteNoti = (id) => {
+    setNotifications(notifications.filter((n) => n.id !== id));
+  };
+
   return (
     <div className="sidebar">
       {/* <div className="sidebarWrapper">
@@ -89,6 +93,7 @@ export default function Sidebar() {
         <NotiModal
           open={notiModal}
           setOpen={setNotiModal}
+          deleteN={deleteNoti}
         />
       ) : (
         ""
