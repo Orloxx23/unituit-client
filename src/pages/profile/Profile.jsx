@@ -9,7 +9,6 @@ import { useParams } from "react-router";
 import { getNoAvatar, getNoCover } from "../../utils/getImg";
 
 export default function Profile() {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
   const [noAvatar, setNoAvatar] = useState("");

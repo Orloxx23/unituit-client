@@ -68,7 +68,7 @@ export default function Rightbar({ user }) {
         axios.put(
           `https://unituit-api.up.railway.app/api/users/${user._id}/notification`,
           {
-            notifications: [...user.notifications, notification],
+            notifications: notification,
           }
         );
       }

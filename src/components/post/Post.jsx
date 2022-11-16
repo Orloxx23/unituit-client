@@ -58,7 +58,7 @@ export default function Post({ post, deleteP }) {
         await axios.put(
           `https://unituit-api.up.railway.app/api/users/${post.userId}/notification`,
           {
-            notifications: [...user.notifications, notification],
+            notifications: notification,
           }
         );
       }

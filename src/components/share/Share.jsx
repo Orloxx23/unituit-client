@@ -99,7 +99,7 @@ export default function Share({ addPost }) {
         axios.put(
           `https://unituit-api.up.railway.app/api/users/${follower}/notification`,
           {
-            notifications: [...user.notifications, notification],
+            notifications: notification
           }
         );
       });
