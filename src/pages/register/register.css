@@ -11,20 +11,22 @@
   width: 70%;
   height: 70%;
   display: flex;
+  justify-content: center;
 }
 
 .loginLeft,
 .loginRight {
-  flex: 1;
+  flex: 1 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .loginLogo {
-  font-size: 50px;
+  font-size: 80px;
   font-weight: 800;
-  color: #1775ee;
+  color: #ffffff;
   margin-bottom: 10px;
 }
 
@@ -33,21 +35,23 @@
 }
 
 .loginBox{
-    height: 400px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  width: 50%;
+  height: max-content;
+  padding: 20px;
+  background: rgba(42, 163, 239, 0.04);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .loginInput{
-    height: 50px;
-    border-radius: 10px;
-    border: 1px solid gray;
-    font-size: 18px;
-    padding-left: 20px;
+  height: 50px;
+  margin: 7px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-size: 18px;
+  padding-left: 20px;
 }
 
 .loginInput:focus{
@@ -55,14 +59,15 @@
 }
 
 .loginButton{
-    height: 50px;
-    border-radius: 10px;
-    border: none;
-    background-color: #1775ee;
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
+  height: 50px;
+  border: none;
+  margin: 8px;
+  background: #4FD8E0;
+  border-radius: 30px;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .loginForgot{
@@ -71,14 +76,21 @@
 }
 
 .loginRegisterButton{
-    width: 60%;
-    align-self: center;
-    height: 50px;
-    border-radius: 10px;
-    border: none;
-    background-color: #42b72a;
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
+  width: 60%;
+  align-self: center;
+  height: 50px;
+  border: none;
+  height: 50px;
+  border: none;
+  background: #008effa6;
+  border-radius: 7px;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 16px;
 }

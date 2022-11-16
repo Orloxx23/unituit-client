@@ -21,10 +21,10 @@ export default function Login() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Lamasocial</h3>
-          <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
-          </span>
+          <div className="containerLoginText">
+          <h3 className="loginLogo">UNI</h3>
+          <h3 className="loginLogo2">TUIT</h3>
+          </div>
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
@@ -36,7 +36,7 @@ export default function Login() {
               ref={email}
             />
             <input
-              placeholder="Password"
+              placeholder="Contraseña"
               type="password"
               required
               minLength="6"
@@ -47,15 +47,14 @@ export default function Login() {
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
               ) : (
-                "Log In"
+                "Iniciar sesión"
               )}
             </button>
-            <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
               ) : (
-                "Create a New Account"
+                "Registrate"
               )}
             </button>
           </form>
