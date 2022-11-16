@@ -106,7 +106,7 @@ export default function Rightbar({ user }) {
         </div> */}
         <h4 className="rightbarTitle">Siguiendo a {user.followings?.length}</h4>
         <div className="rightbarFollowings">
-          {friends.map((friend) => (
+          {friends?.map((friend) => (
             <Link
               to={"/profile/" + friend.username}
               style={{ textDecoration: "none" }}
