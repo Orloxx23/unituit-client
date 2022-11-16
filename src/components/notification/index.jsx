@@ -3,11 +3,17 @@ import React from "react";
 import "./notification.css";
 import { AuthContext } from "../../context/";
 import { Link } from "react-router-dom";
+import { getNoAvatar } from "../../utils/getImg";
 
 export default function Notification({ notification, deleteNoti }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = React.useState(null);
   const { user: currentUser } = React.useContext(AuthContext);
+  const [noAvatar, setNoAvatar] = React.useState("");
+
+  React.useEffect(() => {
+    getNoAvatar().then((res) => setNoAvatar(res));
+  }, []);
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -56,8 +62,8 @@ export default function Notification({ notification, deleteNoti }) {
             <img
               src={
                 user?.profilePicture
-                  ? PF + user.profilePicture
-                  : PF + "person/noAvatar.png"
+                  ? user.profilePicture
+                  : noAvatar
               }
               alt=""
             />
