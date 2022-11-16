@@ -35,7 +35,7 @@ export default function Notification({ notification, deleteNoti }) {
   const markAsRead = async () => {
     try {
       await axios.put(
-        "http://localhost:8800/api/users/" +
+        "https://unituit-api.up.railway.app/api/users/" +
           currentUser._id +
           "/readnoti",
         {

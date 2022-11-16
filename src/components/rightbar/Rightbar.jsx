@@ -16,7 +16,7 @@ export default function Rightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("https://unituit-api.up.railway.app/users/friends/" + user._id);
+        const friendList = await axios.get("https://unituit-api.up.railway.app/api/users/friends/" + user._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
