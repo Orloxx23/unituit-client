@@ -12,6 +12,11 @@ export default function Topbar() {
   useEffect(() => {
     getNoAvatar().then((res) => setNoAvatar(res));
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    window.location.replace("/");
+  };
   /*return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -87,7 +92,8 @@ export default function Topbar() {
           <p className="usuarioText">{user.username}</p>
           <p className="usuarioArroba">{"@" + user.username}</p>
         </div>
-        {/* <img src={Settings} onClick={logout} alt="settings" /> */}
+        <i class="fa-solid fa-arrow-right-from-bracket" style={{cursor: "pointer"} } onClick={logout}></i>
+        {/* <img src={Settings} alt="settings" /> */}
       </div>
     </div>
   );
