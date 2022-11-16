@@ -35,14 +35,20 @@ export default function Rightbar({ user }) {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axios.put(`https://unituit-api.herokuapp.com/api/users/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `https://unituit-api.herokuapp.com/api/users/${user._id}/unfollow`,
+          {
+            userId: currentUser._id,
+          }
+        );
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await axios.put(`https://unituit-api.herokuapp.com/api/users/${user._id}/follow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `https://unituit-api.herokuapp.com/api/users/${user._id}/follow`,
+          {
+            userId: currentUser._id,
+          }
+        );
         dispatch({ type: "FOLLOW", payload: user._id });
         socket?.emit("newNotification", {
           senderId: currentUser._id,
@@ -55,9 +61,12 @@ export default function Rightbar({ user }) {
           type: "follow",
           read: false,
         };
-        axios.put(`https://unituit-api.herokuapp.com/api/users/${user._id}/notification`, {
-          notifications: [...user.notifications, notification],
-        });
+        axios.put(
+          `https://unituit-api.herokuapp.com/api/users/${user._id}/notification`,
+          {
+            notifications: [...user.notifications, notification],
+          }
+        );
       }
       setFollowed(!followed);
       //window.location.reload();
@@ -104,8 +113,9 @@ export default function Rightbar({ user }) {
             <span className="rightbarInfoValue">{user.followings?.length}</span>
           </div>
         </div> */}
-        <h4 className="rightbarTitle">Siguiendo a {user.followings?.length}</h4>
-        <div className="rightbarFollowings">
+        <h4 className="rightbarTitle">Seguidores: {user.followers?.length}</h4>
+        <h4 className="rightbarTitle">Siguiendo: {user.followings?.length}</h4>
+        {/* <div className="rightbarFollowings">
           {friends?.map((friend) => (
             <Link
               to={"/profile/" + friend.username}
@@ -126,7 +136,7 @@ export default function Rightbar({ user }) {
               </div>
             </Link>
           ))}
-        </div>
+        </div> */}
       </>
     );
   };
