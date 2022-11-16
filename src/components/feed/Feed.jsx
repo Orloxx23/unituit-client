@@ -41,7 +41,7 @@ export default function Feed({ username, socket }) {
       <div className="feedWrapper">
         {(!username || username === user.username) && <Share addPost={addPost}/>}
         {posts.map((p) => (
-          <Post key={p._id} post={p} deleteP={deletePost} sokect={socket} />
+          <Post key={p._id || p.tempId} post={p} deleteP={deletePost} sokect={socket} />
         ))}
       </div>
     </div>

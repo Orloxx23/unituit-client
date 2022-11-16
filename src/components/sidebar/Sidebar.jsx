@@ -1,5 +1,6 @@
 import React from "react";
 import "./sidebar.css";
+import axios from "axios";
 //import CloseFriend from "../closeFriend/CloseFriend";
 import TuitModal from "../tuitModal";
 import { Link } from "react-router-dom";
@@ -12,12 +13,24 @@ export default function Sidebar() {
   const [notifications, setNotifications] = React.useState([]);
 
   React.useEffect(() => {
-    socket?.on("getLikePost", data => {
+    const getNotifications = async () => {
+      try {
+        const res = await axios.get("https://unituit-api.herokuapp.com/api/users?userId=" + user._id);
+        setNotifications(
+          res.data.notifications.filter((n) => n.read === false)
+        );
+      } catch (err) {}
+    };
+    getNotifications();
+  }, [user._id]);
+
+  React.useEffect(() => {
+    socket?.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
     });
   }, [socket]);
 
-  console.log(notifications);
+  //console.log(notifications);
 
   return (
     <div className="sidebar">
@@ -85,7 +98,10 @@ export default function Sidebar() {
             <div className="frame">
               <div className="iconFrame"></div>
               <p className="nameFrame">
-                Notificaciones <span>{notifications.length}</span>
+                Notificaciones{" "}
+                {notifications.length > 0 && (
+                  <span className="badge">{notifications.length}</span>
+                )}
               </p>
             </div>
             <Link to={`/profile/${user.username}`}>
@@ -94,9 +110,9 @@ export default function Sidebar() {
                 <p className="nameFrame">Perfil</p>
               </div>
             </Link>
-            <button className="bTuit" onClick={() => setOpen(!open)}>
+            {/* <button className="bTuit" onClick={() => setOpen(!open)}>
               Tuit
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

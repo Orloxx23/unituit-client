@@ -21,6 +21,7 @@ export default function Post({ post, deleteP }) {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(
+        //`/users?userId=${post.userId}`
         `https://unituit-api.herokuapp.com/api/users?userId=${post.userId}`
       );
       setUser(res.data);
@@ -31,16 +32,26 @@ export default function Post({ post, deleteP }) {
   const likeHandler = async () => {
     try {
       await axios.put(
+        //"/posts/" + post._id + "/like",
         "https://unituit-api.herokuapp.com/api/posts/" + post._id + "/like",
         { userId: currentUser._id }
       );
     } catch (err) {}
     if (!isLiked) {
       if (currentUser._id !== post.userId) {
-        socket?.emit("likePost", {
+        socket?.emit("newNotification", {
           senderId: currentUser._id,
           receiverId: post.userId,
-          postId: post._id,
+          type: "like",
+        });
+        const notification = {
+          id: currentUser._id + Date.now() + Math.floor(Math.random() * 999),
+          senderId: currentUser._id,
+          type: "like",
+          read: false,
+        };
+        await axios.put(`https://unituit-api.herokuapp.com/api/users/${post.userId}/notification`, {
+          notifications: [...user.notifications, notification],
         });
       }
     }
@@ -53,15 +64,18 @@ export default function Post({ post, deleteP }) {
   };
 
   const deletePost = async () => {
-    try {
-      await axios.delete(
-        `https://unituit-api.herokuapp.com/api/posts/${post._id}`,
-        {
-          data: { userId: currentUser._id },
-        }
-      );
-      deleteP(post._id);
-    } catch (err) {}
+    if (post._id) {
+      try {
+        await axios.delete(
+          //"/posts/" + post._id,
+          `https://unituit-api.herokuapp.com/api/posts/${post._id}`,
+          {
+            data: { userId: currentUser._id },
+          }
+        );
+        deleteP(post._id);
+      } catch (err) {}
+    }
   };
 
   const localeFunc = (number, index, total_sec) => {
@@ -140,7 +154,7 @@ export default function Post({ post, deleteP }) {
 
   return (
     <>
-      <div className="post">
+      <div className="post" key={post._id}>
         <div className="contend_up_post">
           <Link to={`/profile/${user.username}`}>
             <div className="contend_up_post_user">

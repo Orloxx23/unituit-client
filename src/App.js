@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
@@ -11,6 +12,7 @@ import {
 import React from "react";
 import { AuthContext, SocketContext } from "./context";
 import { io } from "socket.io-client";
+import axios from "axios";
 
 function App() {
   const { user } = React.useContext(AuthContext);
@@ -18,12 +20,25 @@ function App() {
 
   React.useEffect(() => {
     const socket = io("https://unituit-api.herokuapp.com");
+    //const socket = io("http://localhost:8800");
     setSocket(socket);
   }, []);
 
   React.useEffect(() => {
     socket?.emit("addUser", user?._id);
   }, [socket, user]);
+
+  React.useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await axios.get("https://unituit-api.herokuapp.com/api/users?userId=" + user._id);
+        localStorage.setItem("user", JSON.stringify(res.data));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, []);
 
   return (
     <Router>

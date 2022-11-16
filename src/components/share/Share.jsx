@@ -1,17 +1,30 @@
+import React from "react";
 import "./share.css";
-import {
-  PermMedia,
-  Cancel,
-} from "@material-ui/icons";
+import { PermMedia, Cancel } from "@material-ui/icons";
 import { useContext, useRef, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext, SocketContext } from "../../context/";
 import axios from "axios";
 
-export default function Share({addPost}) {
+export default function Share({ addPost }) {
   const { user } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [file, setFile] = useState(null);
+  const [followers, setFollowers] = useState([]);
+
+  const getFollowers = async () => {
+    try {
+      const res = await axios.get("https://unituit-api.herokuapp.com/api/users?userId=" + user._id);
+      setFollowers(res.data.followers);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  React.useEffect(() => {
+    getFollowers();
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -32,18 +45,40 @@ export default function Share({addPost}) {
       } catch (err) {}
     }
     try {
+      await getFollowers();
       await axios.post("https://unituit-api.herokuapp.com/api/posts", newPost);
+      const postTmp = {
+        tempId: user._id + Date.now(),
+        ...newPost,
+      };
       reset();
-      addPost(newPost);
+      addPost(postTmp);
+      socket?.emit("newNotification", {
+        senderId: user._id,
+        receiverId: followers,
+        type: "post",
+      });
+      const notification = {
+        id: user._id + Date.now() + Math.floor(Math.random() * 999),
+        senderId: user._id,
+        text: newPost.desc,
+        type: "post",
+        read: false,
+      };
+      followers.map((follower) => {
+        axios.put(`https://unituit-api.herokuapp.com/api/users/${follower}/notification`, {
+          notifications: [...user.notifications, notification],
+        });
+      });
+
       //window.location.reload();
     } catch (err) {}
-    
   };
 
-  const reset = () =>{
+  const reset = () => {
     setFile(null);
     desc.current.value = "";
-  }
+  };
 
   return (
     <div className="share">

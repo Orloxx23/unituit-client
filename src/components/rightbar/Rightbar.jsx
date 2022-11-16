@@ -3,20 +3,21 @@ import "./rightbar.css";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context";
+import { AuthContext, SocketContext } from "../../context/";
 import { Add, Remove } from "@material-ui/icons";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
   //const { socket } = useContext(SocketContext);
   const [followed, setFollowed] = useState();
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("https://unituit-api.herokuapp.com/api/users/friends/" + user._id);
+        const friendList = await axios.get("/users/friends/" + user._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -43,6 +44,20 @@ export default function Rightbar({ user }) {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
+        socket?.emit("newNotification", {
+          senderId: currentUser._id,
+          receiverId: user._id,
+          type: "follow",
+        });
+        const notification = {
+          id: currentUser._id + Date.now() + Math.floor(Math.random() * 999),
+          senderId: currentUser._id,
+          type: "follow",
+          read: false,
+        };
+        axios.put(`https://unituit-api.herokuapp.com/api/users/${user._id}/notification`, {
+          notifications: [...user.notifications, notification],
+        });
       }
       setFollowed(!followed);
       //window.location.reload();
