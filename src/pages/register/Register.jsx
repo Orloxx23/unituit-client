@@ -37,15 +37,15 @@ export default function Register() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Lamasocial</h3>
-          <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
-          </span>
+        <div className="containerLoginText">
+          <h3 className="loginLogo">UNI</h3>
+          <h3 className="loginLogo2">TUIT</h3>
+          </div>
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
             <input
-              placeholder="Username"
+              placeholder="Nombre Usuario"
               required
               ref={username}
               className="loginInput"
@@ -58,7 +58,7 @@ export default function Register() {
               type="email"
             />
             <input
-              placeholder="Password"
+              placeholder="Contraseña"
               required
               ref={password}
               className="loginInput"
@@ -66,16 +66,16 @@ export default function Register() {
               minLength="6"
             />
             <input
-              placeholder="Password Again"
+              placeholder="Repite Contraseña"
               required
               ref={passwordAgain}
               className="loginInput"
               type="password"
             />
             <button className="loginButton" type="submit">
-              Sign Up
+              Registrarse
             </button>
-            <button className="loginRegisterButton">Log into Account</button>
+            <button className="loginRegisterButton">Iniciar sesión</button>
           </form>
         </div>
       </div>
