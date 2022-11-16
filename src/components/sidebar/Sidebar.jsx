@@ -15,7 +15,7 @@ export default function Sidebar() {
   React.useEffect(() => {
     const getNotifications = async () => {
       try {
-        const res = await axios.get("https://unituit-api.herokuapp.com/api/users?userId=" + user._id);
+        const res = await axios.get("https://unituit-api.up.railway.app/api/users?userId=" + user._id);
         setNotifications(
           res.data.notifications.filter((n) => n.read === false)
         );

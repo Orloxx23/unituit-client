@@ -22,7 +22,7 @@ export default function Post({ post, deleteP }) {
     const fetchUser = async () => {
       const res = await axios.get(
         //`/users?userId=${post.userId}`
-        `https://unituit-api.herokuapp.com/api/users?userId=${post.userId}`
+        `https://unituit-api.up.railway.app/api/users?userId=${post.userId}`
       );
       setUser(res.data);
     };
@@ -33,7 +33,7 @@ export default function Post({ post, deleteP }) {
     try {
       await axios.put(
         //"/posts/" + post._id + "/like",
-        "https://unituit-api.herokuapp.com/api/posts/" + post._id + "/like",
+        "https://unituit-api.up.railway.app/api/posts/" + post._id + "/like",
         { userId: currentUser._id }
       );
     } catch (err) {}
@@ -50,7 +50,7 @@ export default function Post({ post, deleteP }) {
           type: "like",
           read: false,
         };
-        await axios.put(`https://unituit-api.herokuapp.com/api/users/${post.userId}/notification`, {
+        await axios.put(`https://unituit-api.up.railway.app/api/users/${post.userId}/notification`, {
           notifications: [...user.notifications, notification],
         });
       }
@@ -68,7 +68,7 @@ export default function Post({ post, deleteP }) {
       try {
         await axios.delete(
           //"/posts/" + post._id,
-          `https://unituit-api.herokuapp.com/api/posts/${post._id}`,
+          `https://unituit-api.up.railway.app/api/posts/${post._id}`,
           {
             data: { userId: currentUser._id },
           }

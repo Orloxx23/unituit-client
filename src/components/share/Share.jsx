@@ -15,7 +15,7 @@ export default function Share({ addPost }) {
 
   const getFollowers = async () => {
     try {
-      const res = await axios.get("https://unituit-api.herokuapp.com/api/users?userId=" + user._id);
+      const res = await axios.get("https://unituit-api.up.railway.app/api/users?userId=" + user._id);
       setFollowers(res.data.followers);
     } catch (err) {
       console.log(err);
@@ -41,12 +41,12 @@ export default function Share({ addPost }) {
       newPost.img = fileName;
       console.log(newPost);
       try {
-        await axios.post("https://unituit-api.herokuapp.com/api/upload", data);
+        await axios.post("https://unituit-api.up.railway.app/api/upload", data);
       } catch (err) {}
     }
     try {
       await getFollowers();
-      await axios.post("https://unituit-api.herokuapp.com/api/posts", newPost);
+      await axios.post("https://unituit-api.up.railway.app/api/posts", newPost);
       const postTmp = {
         tempId: user._id + Date.now(),
         ...newPost,
@@ -66,7 +66,7 @@ export default function Share({ addPost }) {
         read: false,
       };
       followers.map((follower) => {
-        axios.put(`https://unituit-api.herokuapp.com/api/users/${follower}/notification`, {
+        axios.put(`https://unituit-api.up.railway.app/api/users/${follower}/notification`, {
           notifications: [...user.notifications, notification],
         });
       });

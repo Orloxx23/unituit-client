@@ -19,7 +19,7 @@ function App() {
   const { socket, setSocket } = React.useContext(SocketContext);
 
   React.useEffect(() => {
-    const socket = io("https://unituit-api.herokuapp.com");
+    const socket = io("https://unituit-api.up.railway.app");
     //const socket = io("http://localhost:8800");
     setSocket(socket);
   }, []);
@@ -31,7 +31,7 @@ function App() {
   React.useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get("https://unituit-api.herokuapp.com/api/users?userId=" + user._id);
+        const res = await axios.get("https://unituit-api.up.railway.app/api/users?userId=" + user._id);
         localStorage.setItem("user", JSON.stringify(res.data));
       } catch (err) {
         console.log(err);

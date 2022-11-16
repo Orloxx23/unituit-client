@@ -15,8 +15,8 @@ export default function Feed({ username, socket }) {
 
   const fetchPosts = async () => {
     const res = username
-      ? await axios.get("https://unituit-api.herokuapp.com/api/posts/profile/" + username)
-      : await axios.get("https://unituit-api.herokuapp.com/api/posts/timeline/" + user._id);
+      ? await axios.get("https://unituit-api.up.railway.app/api/posts/profile/" + username)
+      : await axios.get("https://unituit-api.up.railway.app/api/posts/timeline/" + user._id);
     setPosts(
       res.data.sort((p1, p2) => {
         return new Date(p2.createdAt) - new Date(p1.createdAt);

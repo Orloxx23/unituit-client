@@ -16,7 +16,7 @@ export default function Profile() {
     const fetchUser = async () => {
       const res = await axios.get(
         //`/users?username=${username}`
-        `https://unituit-api.herokuapp.com/api/users?username=${username}`
+        `https://unituit-api.up.railway.app/api/users?username=${username}`
         );
       setUser(res.data);
     };

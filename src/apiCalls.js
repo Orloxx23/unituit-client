@@ -5,7 +5,7 @@ export const loginCall = async (userCredential, dispatch) => {
   try {
     const res = await axios.post(
       //"/auth/login",
-      "https://unituit-api.herokuapp.com/api/auth/login",
+      "https://unituit-api.up.railway.app/api/auth/login",
       userCredential
     );
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });

@@ -17,7 +17,7 @@ export default function Rightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
+        const friendList = await axios.get("https://unituit-api.up.railway.app/users/friends/" + user._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -36,7 +36,7 @@ export default function Rightbar({ user }) {
     try {
       if (followed) {
         await axios.put(
-          `https://unituit-api.herokuapp.com/api/users/${user._id}/unfollow`,
+          `https://unituit-api.up.railway.app/api/users/${user._id}/unfollow`,
           {
             userId: currentUser._id,
           }
@@ -44,7 +44,7 @@ export default function Rightbar({ user }) {
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axios.put(
-          `https://unituit-api.herokuapp.com/api/users/${user._id}/follow`,
+          `https://unituit-api.up.railway.app/api/users/${user._id}/follow`,
           {
             userId: currentUser._id,
           }
@@ -62,7 +62,7 @@ export default function Rightbar({ user }) {
           read: false,
         };
         axios.put(
-          `https://unituit-api.herokuapp.com/api/users/${user._id}/notification`,
+          `https://unituit-api.up.railway.app/api/users/${user._id}/notification`,
           {
             notifications: [...user.notifications, notification],
           }
@@ -115,7 +115,7 @@ export default function Rightbar({ user }) {
         </div> */}
         <h4 className="rightbarTitle">Seguidores: {user.followers?.length}</h4>
         <h4 className="rightbarTitle">Siguiendo: {user.followings?.length}</h4>
-        {/* <div className="rightbarFollowings">
+        <div className="rightbarFollowings">
           {friends?.map((friend) => (
             <Link
               to={"/profile/" + friend.username}
@@ -136,7 +136,7 @@ export default function Rightbar({ user }) {
               </div>
             </Link>
           ))}
-        </div> */}
+        </div>
       </>
     );
   };

@@ -23,7 +23,7 @@ export default function Register() {
       try {
         await axios.post(
           //"/auth/register",
-          "https://unituit-api.herokuapp.com/api/auth/register",
+          "https://unituit-api.up.railway.app/api/auth/register",
           user
         );
         history.push("/login");
