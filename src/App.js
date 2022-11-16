@@ -20,7 +20,7 @@ function App() {
 
   React.useEffect(() => {
     const socket = io("https://unituit-api.up.railway.app", {
-      withCredentials: false,
+      withCredentials: true,
     });
     //const socket = io("http://localhost:8800");
     setSocket(socket);
