@@ -19,7 +19,9 @@ function App() {
   const { socket, setSocket } = React.useContext(SocketContext);
 
   React.useEffect(() => {
-    const socket = io("https://unituit-api.up.railway.app");
+    const socket = io("https://unituit-api.up.railway.app", {
+      withCredentials: false,
+    });
     //const socket = io("http://localhost:8800");
     setSocket(socket);
   }, []);
