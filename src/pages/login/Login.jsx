@@ -3,6 +3,7 @@ import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
+import { Notificacion } from "../../../components/Notificacion";
 
 export default function Login() {
   const email = useRef();
@@ -60,6 +61,11 @@ export default function Login() {
           </form>
         </div>
       </div>
+      <div>
+      <Notificacion />
     </div>
+    </div>
+
+    
   );
 }
