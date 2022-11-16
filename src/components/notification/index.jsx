@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import "./notification.css";
 import { AuthContext } from "../../context/";
+import { Link } from "react-router-dom";
 
 export default function Notification({ notification, deleteNoti }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -51,14 +52,16 @@ export default function Notification({ notification, deleteNoti }) {
     <div className="notification-card">
       <div className="notification-card-head">
         {user ? (
-          <img
-            src={
-              user?.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
-            }
-            alt=""
-          />
+          <Link to={"/profile/" + user.username}>
+            <img
+              src={
+                user?.profilePicture
+                  ? PF + user.profilePicture
+                  : PF + "person/noAvatar.png"
+              }
+              alt=""
+            />
+          </Link>
         ) : (
           <div className="userPictureLazyCircle lazyColor"></div>
         )}
@@ -67,7 +70,9 @@ export default function Notification({ notification, deleteNoti }) {
         <div className="notification-content">
           {user ? (
             <>
-              <p className="notification-username">{user?.username}</p>
+              <Link to={"/profile/" + user.username}>
+                <p className="notification-username">{user?.username}</p>
+              </Link>
               <p className="notification-text">{getType()}</p>
             </>
           ) : (
@@ -79,6 +84,7 @@ export default function Notification({ notification, deleteNoti }) {
         </div>
         <div className="notification-read">
           <i
+            style={{ cursor: "pointer" }}
             className={
               notification.read
                 ? "fa-solid fa-check read"

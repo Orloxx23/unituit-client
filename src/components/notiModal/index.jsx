@@ -42,7 +42,6 @@ export default function NotiModal({ open, setOpen, deleteN }) {
                 notification={n}
                 key={n.id}
                 deleteNoti={deleteNoti}
-                onClick={() => setOpen(!open)}
               />
             ))
           ) : (
