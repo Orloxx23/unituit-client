@@ -1,12 +1,17 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { getNoAvatar } from "../../utils/getImg";
 
 export default function Topbar() {
   const { user } = useContext(AuthContext);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [noAvatar, setNoAvatar] = useState("");
+
+  useEffect(() => {
+    getNoAvatar().then((res) => setNoAvatar(res));
+  }, []);
   /*return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -64,7 +69,7 @@ export default function Topbar() {
             <h1 className="UParte1">UNI</h1>
             <h1 className="UParte2">TUIT</h1>
           </div>
-          <img src={PF + "logo.png"} alt="logo" className="imgLogo" />
+          <img src={"https://firebasestorage.googleapis.com/v0/b/unituit-ef9d7.appspot.com/o/logo.png?alt=media&token=89931bf8-9318-43c3-9e72-37be04d256fd"} alt="logo" className="imgLogo" />
         </div>
       </Link>
       <div className="searchContend">
@@ -73,11 +78,7 @@ export default function Topbar() {
       <div className="user">
         <Link className="user_img" to={`/profile/${user.username}`}>
           <img
-            src={
-              user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
-            }
+            src={user.profilePicture ? user.profilePicture : noAvatar}
             alt="user"
             className="user_img"
           />

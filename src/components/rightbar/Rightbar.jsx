@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext, SocketContext } from "../../context/";
 import { Add, Remove } from "@material-ui/icons";
+import { getNoAvatar } from "../../utils/getImg";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -12,6 +13,11 @@ export default function Rightbar({ user }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
   const [followed, setFollowed] = useState();
+  const [noAvatar, setNoAvatar] = useState("");
+
+  useEffect(() => {
+    getNoAvatar().then((res) => setNoAvatar(res));
+  }, []);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -125,8 +131,8 @@ export default function Rightbar({ user }) {
                 <img
                   src={
                     friend.profilePicture
-                      ? PF + friend.profilePicture
-                      : PF + "person/noAvatar.png"
+                      ? friend.profilePicture
+                      : noAvatar
                   }
                   alt=""
                   className="rightbarFollowingImg"

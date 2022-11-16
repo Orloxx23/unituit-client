@@ -4,6 +4,9 @@ import { PermMedia, Cancel } from "@material-ui/icons";
 import { useContext, useRef, useState } from "react";
 import { AuthContext, SocketContext } from "../../context/";
 import axios from "axios";
+import { storage } from "../../config/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getNoAvatar } from "../../utils/getImg";
 
 export default function Share({ addPost }) {
   const { user } = useContext(AuthContext);
@@ -12,10 +15,17 @@ export default function Share({ addPost }) {
   const desc = useRef();
   const [file, setFile] = useState(null);
   const [followers, setFollowers] = useState([]);
+  const [noAvatar, setNoAvatar] = useState("");
+
+  React.useEffect(() => {
+    getNoAvatar().then((res) => setNoAvatar(res));
+  }, []);
 
   const getFollowers = async () => {
     try {
-      const res = await axios.get("https://unituit-api.up.railway.app/api/users?userId=" + user._id);
+      const res = await axios.get(
+        "https://unituit-api.up.railway.app/api/users?userId=" + user._id
+      );
       setFollowers(res.data.followers);
     } catch (err) {
       console.log(err);
@@ -35,15 +45,35 @@ export default function Share({ addPost }) {
     };
     if (file) {
       const data = new FormData();
-      const fileName = Date.now() + file.name;
+      const fileName = Date.now() + file.name.trim();
       data.append("name", fileName);
       data.append("file", file);
-      newPost.img = fileName;
-      console.log(newPost);
+      //console.log(newPost);
       try {
-        await axios.post("https://unituit-api.up.railway.app/api/upload", data);
+        const storageRef = ref(storage, `/images/${fileName}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        await uploadTask.on(
+          "state_changed",
+          (snapshot) => {},
+          (err) => console.log(err),
+          () => {
+            // download url
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              console.log(url);
+              newPost.img = url;
+              uploadPost(newPost);
+            });
+          }
+        );
+        //await axios.post("https://unituit-api.up.railway.app/api/upload", data);
       } catch (err) {}
+    } else {
+      uploadPost(newPost);
     }
+  };
+
+  const uploadPost = async (newPost) => {
     try {
       await getFollowers();
       await axios.post("https://unituit-api.up.railway.app/api/posts", newPost);
@@ -66,9 +96,12 @@ export default function Share({ addPost }) {
         read: false,
       };
       followers.map((follower) => {
-        axios.put(`https://unituit-api.up.railway.app/api/users/${follower}/notification`, {
-          notifications: [...user.notifications, notification],
-        });
+        axios.put(
+          `https://unituit-api.up.railway.app/api/users/${follower}/notification`,
+          {
+            notifications: [...user.notifications, notification],
+          }
+        );
       });
 
       //window.location.reload();
@@ -88,8 +121,8 @@ export default function Share({ addPost }) {
             className="shareProfileImg"
             src={
               user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
+                ? user.profilePicture
+                : noAvatar
             }
             alt=""
           />

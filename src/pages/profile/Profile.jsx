@@ -6,11 +6,19 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
+import { getNoAvatar, getNoCover } from "../../utils/getImg";
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
+  const [noAvatar, setNoAvatar] = useState("");
+  const [noCover, setNoCover] = useState("");
+
+  useEffect(() => {
+    getNoAvatar().then((res) => setNoAvatar(res));
+    getNoCover().then((res) => setNoCover(res));
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -35,8 +43,8 @@ export default function Profile() {
                 className="profileCoverImg"
                 src={
                   user.coverPicture
-                    ? PF + user.coverPicture
-                    : PF + "person/noCover.png"
+                    ? user.coverPicture
+                    : noCover
                 }
                 alt=""
               />
@@ -44,8 +52,8 @@ export default function Profile() {
                 className="profileUserImg"
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
-                    : PF + "person/noAvatar.png"
+                    ? user.profilePicture
+                    : noAvatar
                 }
                 alt=""
               />

@@ -5,6 +5,7 @@ import axios from "axios";
 import { format, register } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext, SocketContext } from "../../context/";
+import { getNoAvatar } from "../../utils/getImg";
 
 export default function Post({ post, deleteP }) {
   const [like, setLike] = useState(post.likes.length);
@@ -13,6 +14,11 @@ export default function Post({ post, deleteP }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
+  const [noAvatar, setNoAvatar] = useState("");
+
+  useEffect(() => {
+    getNoAvatar().then((res) => setNoAvatar(res));
+  }, []);
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -50,9 +56,12 @@ export default function Post({ post, deleteP }) {
           type: "like",
           read: false,
         };
-        await axios.put(`https://unituit-api.up.railway.app/api/users/${post.userId}/notification`, {
-          notifications: [...user.notifications, notification],
-        });
+        await axios.put(
+          `https://unituit-api.up.railway.app/api/users/${post.userId}/notification`,
+          {
+            notifications: [...user.notifications, notification],
+          }
+        );
       }
     }
     setLike(isLiked ? like - 1 : like + 1);
@@ -159,11 +168,7 @@ export default function Post({ post, deleteP }) {
           <Link to={`/profile/${user.username}`}>
             <div className="contend_up_post_user">
               <img
-                src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
-                    : PF + "person/noAvatar.png"
-                }
+                src={user.profilePicture ? user.profilePicture : noAvatar}
                 alt="Usuario"
                 className="user_img_post"
               />
@@ -188,7 +193,7 @@ export default function Post({ post, deleteP }) {
         </div>
         <div className="contenedor_Image_Post">
           {post.img && (
-            <img src={PF + post.img} alt="Imagen" className="imagenPost" />
+            <img src={post.img} alt="Imagen" className="imagenPost" />
           )}
         </div>
         <div className="likesPost">
