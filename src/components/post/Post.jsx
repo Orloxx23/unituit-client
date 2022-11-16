@@ -51,7 +51,7 @@ export default function Post({ post, deleteP }) {
           read: false,
         };
         await axios.put(`https://unituit-api.up.railway.app/api/users/${post.userId}/notification`, {
-          headers: {"Access-Control-Allow-Origin": "*"},
+          headers: {"Access-Control-Allow-Origin": "https://unituit-client.vercel.app"},
           notifications: [...user.notifications, notification],
         });
       }
