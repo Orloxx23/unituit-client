@@ -1,0 +1,115 @@
+.notification-card {
+  display: flex;
+  padding: 20px;
+  max-width: 100%;
+  border-bottom: rgba(255, 255, 255, 0.069) solid 1px;
+}
+
+.notification-card-head img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.userPictureLazyCircle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background: #194547;
+}
+
+.notification-card-body {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.notification-username {
+  color: white;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.notification-text {
+  color: white;
+  font-weight: 200;
+}
+
+.notification-usernameLazy {
+  min-height: 1rem;
+  min-width: 8rem;
+  max-width: 8rem;
+  border-radius: 25px;
+  margin-bottom: 5px;
+  background: #194547;
+}
+
+.notification-textLazy {
+  min-height: 1rem;
+  min-width: 15rem;
+  border-radius: 25px;
+  background: #194547;
+}
+
+.read{
+    color: #ffffff21;
+}
+
+.noread{
+    color: white;
+}
+.lazyColor {
+  opacity: 0.5;
+  background: linear-gradient(
+    135deg,
+    rgba(211, 223, 232, 0.5) 30%,
+    rgba(169, 184, 197, 0.5) 38%,
+    rgba(168, 182, 193, 0.6) 41%,
+    rgba(168, 182, 193, 0.6) 50%,
+    rgba(168, 182, 193, 0.6) 50%,
+    rgba(169, 184, 197, 0.6) 51%,
+    rgba(211, 223, 232, 0.6) 57%,
+    rgba(211, 223, 232, 0.6) 80%,
+    rgba(211, 223, 232, 0.6) 80%
+  );
+  background-size: 1200% 1200%;
+
+  -webkit-animation: AnimationName 2s ease infinite reverse;
+  -moz-animation: AnimationName 2s ease infinite reverse;
+  animation: AnimationName 2s ease infinite reverse;
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 92%;
+  }
+  50% {
+    background-position: 100% 9%;
+  }
+  100% {
+    background-position: 0% 92%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 92%;
+  }
+  50% {
+    background-position: 100% 9%;
+  }
+  100% {
+    background-position: 0% 92%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 92%;
+  }
+  100% {
+    background-position: 100% 9%;
+  }
+  /*     100%{background-position:0% 92%} */
+}

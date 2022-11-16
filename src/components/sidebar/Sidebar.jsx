@@ -5,17 +5,21 @@ import axios from "axios";
 import TuitModal from "../tuitModal";
 import { Link } from "react-router-dom";
 import { AuthContext, SocketContext } from "../../context";
+import NotiModal from "../notiModal";
 
 export default function Sidebar() {
   const { user } = React.useContext(AuthContext);
   const { socket } = React.useContext(SocketContext);
   const [open, setOpen] = React.useState(false);
   const [notifications, setNotifications] = React.useState([]);
+  const [notiModal, setNotiModal] = React.useState(false);
 
   React.useEffect(() => {
     const getNotifications = async () => {
       try {
-        const res = await axios.get("https://unituit-api.up.railway.app/api/users?userId=" + user._id);
+        const res = await axios.get(
+          "https://unituit-api.up.railway.app/api/users?userId=" + user._id
+        );
         setNotifications(
           res.data.notifications.filter((n) => n.read === false)
         );
@@ -81,6 +85,14 @@ export default function Sidebar() {
           ))}
         </ul>
       </div> */}
+      {notiModal ? (
+        <NotiModal
+          open={notiModal}
+          setOpen={setNotiModal}
+        />
+      ) : (
+        ""
+      )}
       {open ? <TuitModal open={open} setOpen={setOpen} /> : ""}
       <div className="left">
         <div className="menu">
@@ -95,14 +107,16 @@ export default function Sidebar() {
               <div className="iconFrame"></div>
               <p className="nameFrame">Tendencias</p>
             </div> */}
-            <div className="frame">
-              <div className="iconFrame"></div>
-              <p className="nameFrame">
-                Notificaciones{" "}
-                {notifications.length > 0 && (
-                  <span className="badge">{notifications.length}</span>
-                )}
-              </p>
+            <div onClick={() => setNotiModal(!notiModal)}>
+              <div className="frame">
+                <div className="iconFrame"></div>
+                <p className="nameFrame">
+                  Notificaciones{" "}
+                  {notifications.length > 0 && (
+                    <span className="badge">{notifications.length}</span>
+                  )}
+                </p>
+              </div>
             </div>
             <Link to={`/profile/${user.username}`}>
               <div className="frame">

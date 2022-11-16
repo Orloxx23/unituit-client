@@ -11,7 +11,6 @@ export default function Rightbar({ user }) {
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
-  //const { socket } = useContext(SocketContext);
   const [followed, setFollowed] = useState();
 
   useEffect(() => {
