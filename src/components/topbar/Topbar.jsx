@@ -8,10 +8,21 @@ import { getNoAvatar } from "../../utils/getImg";
 export default function Topbar() {
   const { user } = useContext(AuthContext);
   const [noAvatar, setNoAvatar] = useState("");
+  const [notis, setNotis] = useState(localStorage.getItem("notis") === "true");
 
   useEffect(() => {
     getNoAvatar().then((res) => setNoAvatar(res));
   }, []);
+
+  useEffect(() => {
+    setNotis(localStorage.getItem("notis") === "true");
+  }, []);
+
+  const toggleNotis = (e) => {
+    localStorage.setItem("notis", e.target.checked);
+    setNotis(e.target.checked);
+    window.location.reload();
+  };
 
   const logout = () => {
     localStorage.removeItem("user");
@@ -74,7 +85,13 @@ export default function Topbar() {
             <h1 className="UParte1">UNI</h1>
             <h1 className="UParte2">TUIT</h1>
           </div>
-          <img src={"https://firebasestorage.googleapis.com/v0/b/unituit-ef9d7.appspot.com/o/logo.png?alt=media&token=89931bf8-9318-43c3-9e72-37be04d256fd"} alt="logo" className="imgLogo" />
+          <img
+            src={
+              "https://firebasestorage.googleapis.com/v0/b/unituit-ef9d7.appspot.com/o/logo.png?alt=media&token=89931bf8-9318-43c3-9e72-37be04d256fd"
+            }
+            alt="logo"
+            className="imgLogo"
+          />
         </div>
       </Link>
       <div className="searchContend">
@@ -92,8 +109,25 @@ export default function Topbar() {
           <p className="usuarioText">{user.username}</p>
           <p className="usuarioArroba">{"@" + user.username}</p>
         </div>
-        <i class="fa-solid fa-arrow-right-from-bracket" style={{cursor: "pointer"} } onClick={logout}></i>
-        {/* <img src={Settings} alt="settings" /> */}
+        <hr className="separador-topbar" />
+        <div className="showNotifications">
+          <i
+            className={notis ? "fa-solid fa-bell" : "fa-solid fa-bell-slash"}
+          ></i>
+          <label class="switch">
+            <input
+              type="checkbox"
+              checked={notis}
+              onChange={(e) => toggleNotis(e)}
+            />
+            <span className="slider"></span>
+          </label>
+        </div>
+        <i
+          className="fa-solid fa-arrow-right-from-bracket"
+          style={{ cursor: "pointer" }}
+          onClick={logout}
+        ></i>
       </div>
     </div>
   );

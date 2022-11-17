@@ -13,6 +13,9 @@ export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
   const [notifications, setNotifications] = React.useState([]);
   const [notiModal, setNotiModal] = React.useState(false);
+  const [notis, setNotis] = React.useState(
+    localStorage.getItem("notis") === "true"
+  );
 
   React.useEffect(() => {
     const getNotifications = async () => {
@@ -29,8 +32,14 @@ export default function Sidebar() {
   }, [user._id]);
 
   React.useEffect(() => {
+    setNotis(localStorage.getItem("notis") === "true");
+  }, []);
+
+  React.useEffect(() => {
     socket?.on("getNotification", (data) => {
-      setNotifications((prev) => [...prev, data]);
+      if (notis) {
+        setNotifications((prev) => [...prev, data]);
+      }
     });
   }, [socket]);
 
@@ -123,7 +132,7 @@ export default function Sidebar() {
                 <p className="nameFrame">
                   Notificaciones{" "}
                   {notifications.length > 0 && (
-                    <span className="badge">{notifications.length}</span>
+                    notis && <span className="badge">{notifications.length}</span>
                   )}
                 </p>
               </div>
