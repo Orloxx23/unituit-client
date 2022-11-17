@@ -143,7 +143,7 @@ export default function Share({ addPost }) {
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
-              <span className="shareOptionText">Photo or Video</span>
+              <span className="shareOptionText">Imagen</span>
               <input
                 style={{ display: "none" }}
                 type="file"
