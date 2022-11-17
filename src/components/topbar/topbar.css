@@ -186,6 +186,7 @@
   font-size: 14px;
   line-height: 21px;
   color: #f1f1f1;
+  margin: 0;
 }
 
 .usuarioArroba {
@@ -194,6 +195,7 @@
   font-size: 10px;
   line-height: 15px;
   color: #f1f1f1;
+  margin: 0;
 }
 
 .user_img {
@@ -205,8 +207,6 @@
 .usarioTAContend {
   min-width: 8rem;
   max-width: 8rem;
-  display: flex;
-  flex-direction: column;
 }
 
 .showNotifications {
