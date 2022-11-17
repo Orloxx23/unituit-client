@@ -15,7 +15,7 @@ export default function NotiModal({ open, setOpen, deleteN }) {
           "https://unituit-api.up.railway.app/api/users?userId=" + user._id
         );
         setNotifications(
-          res.data.notifications.filter((n) => n.read === false)
+          res.data.notifications.reverse()
         );
       } catch (err) {}
     };
