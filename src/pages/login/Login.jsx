@@ -3,6 +3,7 @@ import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const email = useRef();
@@ -22,8 +23,8 @@ export default function Login() {
       <div className="loginWrapper">
         <div className="loginLeft">
           <div className="containerLoginText">
-          <h3 className="loginLogo">UNI</h3>
-          <h3 className="loginLogo2">TUIT</h3>
+            <h3 className="loginLogo">UNI</h3>
+            <h3 className="loginLogo2">TUIT</h3>
           </div>
         </div>
         <div className="loginRight">
@@ -50,6 +51,8 @@ export default function Login() {
                 "Iniciar sesión"
               )}
             </button>
+          </form>
+          <Link to="/register">
             <button className="loginRegisterButton">
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
@@ -57,7 +60,7 @@ export default function Login() {
                 "Registrate"
               )}
             </button>
-          </form>
+          </Link>
         </div>
       </div>
     </div>
